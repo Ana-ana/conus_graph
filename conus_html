@@ -1,0 +1,48 @@
+<html>
+        <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <script src="jquery-3.5.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        </head>
+        <body>
+          <div id="navbar"><span>Компьютерная графика Пешкова АМ ИС-18з</span></div>
+          <script src="three.min.js"></script>
+          <script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 10000);
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            $('body').append(renderer.domElement);
+            const radius = 15;  
+            const height = 16;  
+            const radialSegments = 50;  
+            const heightSegments = 10;  
+            const openEnded = true;  
+            const thetaStart = Math.PI * 0.25;  
+            const thetaLength = Math.PI * 1.5; 
+            const geometry = new THREE.ConeBufferGeometry(
+                radius, height,
+                radialSegments, heightSegments,
+                openEnded,
+                thetaStart, thetaLength);
+            var material = new THREE.MeshNormalMaterial();
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.scale.x = 0.1;
+            mesh.scale.y = 0.1;
+            mesh.scale.z = 0.1;
+            scene.add(mesh);
+            camera.position.z = 7;
+            var frontSpot = new THREE.SpotLight(0x282c34);
+            frontSpot.position.set(1000, 1000, 1000);
+            scene.add(frontSpot);
+            var animate = function () {
+            requestAnimationFrame(animate);
+            mesh.rotation.x += 0.005;
+            mesh.rotation.y += 0.005;
+            mesh.rotation.z += 0.005;
+            renderer.render(scene, camera);
+            };
+          animate();
+          </script>
+        </body>
+</html>
